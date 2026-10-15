@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astha Goyal Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Poppins:wght@400;500;600;700;800&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: sticky bar, split hero (headline + results card), then alternating plain/tinted bands with a label column on the left. */
+:root {
+  --bg: #f1fcfc;
+  --surface: #ffffff;
+  --tint: #e0f7f7;
+  --fg: #073763;
+  --muted: #476985;
+  --line: #bfe3e6;
+  --accent: #d11a77;
+  --accent-ink: #ffffff;
+  --lime: #afd428;
+  --lime-ink: #073763;
+
+  --font-display: "Poppins", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --radius: 14px;
+  --header-h: 64px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #04213c;
+    --surface: #0a2f54;
+    --tint: #072949;
+    --fg: #e8fafa;
+    --muted: #9ab8cf;
+    --line: #17446c;
+    --accent: #ff5aa9;
+    --accent-ink: #04213c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #04213c;
+  --surface: #0a2f54;
+  --tint: #072949;
+  --fg: #e8fafa;
+  --muted: #9ab8cf;
+  --line: #17446c;
+  --accent: #ff5aa9;
+  --accent-ink: #04213c;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.15rem; font-weight: 600; }
+.lead { font-size: 1.1rem; color: var(--muted); max-width: 56ch; }
+
+/* header */
+.site-header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.bar { display: flex; align-items: center; gap: 16px; min-height: var(--header-h); }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 600; }
+.mono-mark {
+  display: grid; place-items: center;
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--lime); color: var(--lime-ink);
+  font-weight: 800; font-size: 0.9rem;
+}
+.nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.nav a {
+  text-decoration: none; font-size: 0.92rem; font-weight: 500;
+  padding: 8px 12px; border-radius: 999px; color: var(--muted);
+  transition: color .15s, background .15s;
+}
+.nav a:hover, .nav a.active { color: var(--fg); background: var(--tint); }
+.nav .nav-cta { background: var(--fg); color: var(--bg); }
+.nav .nav-cta:hover, .nav .nav-cta.active { background: var(--accent); color: var(--accent-ink); }
+.tools { display: flex; gap: 8px; }
+.icon-btn {
+  display: grid; place-items: center; width: 38px; height: 38px;
+  border-radius: 50%; border: 1px solid var(--line);
+  background: var(--surface); color: var(--fg); cursor: pointer;
+}
+.icon-btn:hover { border-color: var(--accent); }
+.menu-btn { display: none; }
+
+/* hero */
+.hero { padding-block: clamp(40px, 8vw, 96px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.hero h1 { font-size: clamp(2.2rem, 5.6vw, 4rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 20px; }
+.mark {
+  background: linear-gradient(transparent 58%, var(--lime) 58% 92%, transparent 92%);
+  padding-inline: 0.08em;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn {
+  display: inline-block; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+  padding: 12px 22px; border-radius: 999px; border: 2px solid transparent;
+  transition: transform .15s, background .15s, color .15s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-ghost { border-color: var(--fg); color: var(--fg); }
+.btn-ghost:hover { background: var(--fg); color: var(--bg); }
+
+.snapshot {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 24px; padding: 22px;
+  box-shadow: 0 18px 40px -24px color-mix(in srgb, var(--fg) 45%, transparent);
+}
+.snap-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.portrait {
+  display: grid; place-items: center; flex: none;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--fg); color: var(--bg);
+  font-family: var(--font-display); font-weight: 800; font-size: 1.15rem;
+  box-shadow: 0 0 0 4px var(--lime);
+}
+.snap-title { font-family: var(--font-display); font-weight: 600; }
+.snap-sub { font-size: 0.85rem; color: var(--muted); }
+.kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0; }
+.kpi { background: var(--tint); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+.kpi dt { font-size: 0.8rem; color: var(--muted); line-height: 1.3; order: 2; }
+.kpi dd { margin: 0 0 4px; font-family: var(--font-display); font-weight: 800; font-size: 2.1rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.kpi { display: flex; flex-direction: column; }
+.kpi:nth-child(1) dd { color: var(--accent); }
+
+/* sections */
+.section { padding-block: clamp(48px, 8vw, 96px); }
+.section.tint { background: var(--tint); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: clamp(24px, 5vw, 64px); }
+.prose { display: grid; gap: 16px; max-width: 62ch; color: var(--muted); font-size: 1.05rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li {
+  font-size: 0.88rem; font-weight: 500; padding: 6px 14px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--line); color: var(--fg);
+}
+.prose .chips { margin-top: 6px; }
+
+.when { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); letter-spacing: 0.02em; }
+.org { color: var(--accent); font-weight: 600; font-size: 0.95rem; }
+
+/* timeline */
+.timeline { margin-top: 36px; display: grid; gap: 20px; }
+.job {
+  display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 24px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 20px; padding: 26px;
+}
+.job .when { padding-top: 5px; }
+.job-body { min-width: 0; }
+.job-body .org { margin: 4px 0 14px; }
+.job-body ul, .project-main ul { display: grid; gap: 10px; }
+.job-body li, .project-main li { position: relative; padding-left: 22px; color: var(--muted); max-width: 70ch; }
+.job-body li::before, .project-main li::before {
+  content: ""; position: absolute; left: 0; top: 0.62em;
+  width: 10px; height: 10px; border-radius: 3px; background: var(--lime);
+}
+
+/* project */
+.project {
+  margin-top: 36px; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 24px;
+  border: 2px solid var(--fg); border-radius: 20px; padding: 28px; background: var(--surface);
+}
+.project-meta { display: grid; gap: 10px; align-content: start; justify-items: start; }
+.tag { background: var(--lime); color: var(--lime-ink); font-weight: 600; font-size: 0.8rem; padding: 4px 12px; border-radius: 999px; }
+.project-main { display: grid; gap: 12px; min-width: 0; }
+.project-main > p { color: var(--muted); }
+.project-themes { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; padding-top: 16px; border-top: 1px dashed var(--line); }
+.project-themes span { font-family: var(--font-mono); font-size: 0.8rem; padding: 4px 10px; border-radius: 8px; background: var(--tint); }
+
+/* skills */
+.skill-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.skill-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 24px; display: grid; gap: 14px; align-content: start; }
+.skill-card .chips li { background: var(--tint); border-color: transparent; }
+
+/* education */
+.edu { display: grid; }
+.edu li { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 20px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.edu li:first-child { padding-top: 0; }
+.edu .when { padding-top: 4px; }
+.edu .org { color: var(--muted); font-weight: 400; }
+.sub { margin-top: 32px; margin-bottom: 12px; }
+.certs { display: grid; gap: 8px; }
+.certs li { position: relative; padding-left: 22px; }
+.certs li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+
+/* contact */
+.contact { background: var(--fg); color: var(--bg); }
+.contact .label { color: var(--lime); }
+.contact .lead { color: color-mix(in srgb, var(--bg) 78%, transparent); margin-top: 14px; }
+.contact-list { margin-top: 32px; display: grid; max-width: 760px; }
+.contact-list li {
+  display: grid; grid-template-columns: 100px minmax(0, 1fr) auto; gap: 16px; align-items: center;
+  padding-block: 16px; border-bottom: 1px solid color-mix(in srgb, var(--bg) 22%, transparent);
+}
+.c-label { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime); }
+.c-value { font-family: var(--font-display); font-weight: 500; font-size: 1.1rem; overflow-wrap: anywhere; }
+a.c-value { text-decoration: underline; text-underline-offset: 4px; }
+.copy, .copy-spacer {
+  min-width: 72px; text-align: center; text-decoration: none; font: 600 0.85rem var(--font-body);
+  padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--lime);
+  background: transparent; color: var(--lime); cursor: pointer;
+}
+.copy-spacer { border-color: transparent; }
+.copy:hover { background: var(--lime); color: var(--lime-ink); }
+.status { min-height: 1.6em; margin-top: 14px; color: var(--lime); font-size: 0.9rem; }
+
+.site-footer { background: var(--fg); color: color-mix(in srgb, var(--bg) 70%, transparent); border-top: 1px solid color-mix(in srgb, var(--bg) 20%, transparent); padding-block: 22px; font-size: 0.88rem; }
+.foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 900px) {
+  .hero-grid, .split { grid-template-columns: minmax(0, 1fr); }
+  .job, .project { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .project-themes { grid-column: 1; }
+  .project-meta { display: flex; align-items: center; gap: 12px; }
+}
+@media (max-width: 760px) {
+  .menu-btn { display: grid; }
+  .nav {
+    display: none; position: absolute; left: 0; right: 0; top: 100%;
+    flex-direction: column; align-items: stretch; gap: 2px; margin: 0;
+    padding: 12px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px));
+    background: var(--bg); border-bottom: 1px solid var(--line);
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 14px; border-radius: 10px; }
+  .bar { justify-content: space-between; }
+  .tools { margin-left: auto; }
+  .skill-grid { grid-template-columns: minmax(0, 1fr); }
+  .contact-list li { grid-template-columns: minmax(0, 1fr) auto; row-gap: 4px; }
+  .c-label { grid-column: 1 / -1; }
+  .copy-spacer { display: none; }
+  .edu li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+@media (max-width: 420px) {
+  .brand-name { display: none; }
+  .kpis { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+
+</head>
+<body>
+<header class="site-header" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Astha Goyal, back to top"><span class="mono-mark">AG</span><span class="brand-name">Astha Goyal</span></a>
+    <nav id="nav" class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Project</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch colour theme">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="label">Digital marketing · Greater Noida</p>
+        <h1>Hi, I'm Astha. I build <span class="mark">digital campaigns</span> that get noticed.</h1>
+        <p class="lead">PGDM student in Marketing and Business Analytics at Lloyd Business School, with hands-on work in social media management, content marketing and market research.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#contact">Get in touch</a>
+          <a class="btn btn-ghost" href="#experience">See my experience</a>
+        </div>
+      </div>
+
+      <aside class="snapshot" aria-label="Results so far">
+        <div class="snap-head">
+          <span class="portrait" aria-hidden="true">AG</span>
+          <div>
+            <p class="snap-title">Results so far</p>
+            <p class="snap-sub">From internships and coursework</p>
+          </div>
+        </div>
+        <dl class="kpis">
+          <div class="kpi"><dt>LinkedIn engagement</dt><dd><span class="num" data-count="20" data-prefix="+" data-suffix="%">+20%</span></dd></div>
+          <div class="kpi"><dt>Digital reach</dt><dd><span class="num" data-count="10" data-prefix="+" data-suffix="%">+10%</span></dd></div>
+          <div class="kpi"><dt>Survey responses analysed</dt><dd><span class="num" data-count="50" data-suffix="+">50+</span></dd></div>
+          <div class="kpi"><dt>Internships completed</dt><dd><span class="num" data-count="2">2</span></dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="wrap split">
+      <div>
+        <p class="label">About</p>
+        <h2>Marketing with a data habit</h2>
+      </div>
+      <div class="prose">
+        <p>I am currently pursuing a PGDM in Marketing and Business Analytics. Alongside my studies I have worked on social media, content and market research projects, and I like to check every idea against the numbers.</p>
+        <p>My goal is to grow in the digital marketing sector by developing effective strategies, raising brand visibility and contributing to business growth.</p>
+        <ul class="chips" aria-label="Focus areas">
+          <li>Social media</li><li>Campaign strategy</li><li>Market research</li><li>Analytics</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="section tint">
+    <div class="wrap">
+      <p class="label">Experience</p>
+      <h2>Where I have worked</h2>
+      <ol class="timeline">
+        <li class="job">
+          <p class="when">Jul 2026 – Oct 2026</p>
+          <div class="job-body">
+            <h3>Social Media Marketing Intern</h3>
+            <p class="org">MJ Marketing Consultancy</p>
+            <ul>
+              <li>Ran digital and content marketing initiatives that increased LinkedIn engagement by 20% through platform-specific strategies.</li>
+              <li>Managed social media analytics and key KPIs, and prepared weekly performance reports to refine campaigns.</li>
+              <li>Executed marketing campaigns that contributed to a 10% increase in digital reach across platforms.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="job">
+          <p class="when">Jun 2026 – Aug 2026</p>
+          <div class="job-body">
+            <h3>Result and Marketing Development Intern</h3>
+            <p class="org">The Times of India</p>
+            <ul>
+              <li>Carried out market research and customer interactions to understand preferences and market requirements.</li>
+              <li>Organised customer and market data in Excel for tracking and analysis.</li>
+              <li>Gained practical exposure to sales, customer relationship management, market research and business development.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="wrap">
+      <p class="label">Project</p>
+      <h2>Featured research</h2>
+      <article class="project">
+        <div class="project-meta">
+          <p class="when">March 2026</p>
+          <p class="tag">Market research</p>
+        </div>
+        <div class="project-main">
+          <h3>Consumer Behavior Analysis: DLF Mall Study</h3>
+          <p>A survey-based study of what drives shoppers at a large retail mall.</p>
+          <ul>
+            <li>Analysed 50+ survey responses to identify purchasing behaviour and buying trends.</li>
+            <li>Turned the findings into business insights on pricing sensitivity, convenience and brand perception.</li>
+          </ul>
+        </div>
+        <div class="project-themes" aria-label="Themes studied">
+          <span>Pricing sensitivity</span><span>Convenience</span><span>Brand perception</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="skills" class="section tint">
+    <div class="wrap">
+      <p class="label">Skills</p>
+      <h2>Tools and strengths</h2>
+      <div class="skill-grid">
+        <div class="skill-card">
+          <h3>Advertising and search</h3>
+          <ul class="chips"><li>Google Ads</li><li>Meta Ads</li><li>PPC</li><li>SEO</li></ul>
+        </div>
+        <div class="skill-card">
+          <h3>Analytics and data</h3>
+          <ul class="chips"><li>Google Analytics</li><li>Excel (Advanced)</li><li>Consumer behaviour analysis</li><li>Market research</li></ul>
+        </div>
+        <div class="skill-card">
+          <h3>Content and channels</h3>
+          <ul class="chips"><li>Social media management</li><li>Email marketing</li><li>CMS</li><li>Canva</li></ul>
+        </div>
+        <div class="skill-card">
+          <h3>Strategy and people</h3>
+          <ul class="chips"><li>Campaign strategy</li><li>Brand strategy</li><li>Project management</li><li>SCM</li><li>Leadership and team management</li><li>Communication</li><li>Problem solving</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="section">
+    <div class="wrap split">
+      <div>
+        <p class="label">Education</p>
+        <h2>Learning path</h2>
+      </div>
+      <div>
+        <ol class="edu">
+          <li><p class="when">2025 – Present</p><div><h3>PGDM, Marketing and Business Analytics</h3><p class="org">Lloyd Business School</p></div></li>
+          <li><p class="when">2021 – 2024</p><div><h3>Bachelor's degree, BBA</h3><p class="org">School of Management Science, Varanasi</p></div></li>
+          <li><p class="when">2020 – 2021</p><div><h3>Senior secondary</h3><p class="org">Foundation School</p></div></li>
+          <li><p class="when">2018 – 2019</p><div><h3>Secondary</h3><p class="org">DAV Public School</p></div></li>
+        </ol>
+        <h3 class="sub">Certifications</h3>
+        <ul class="certs">
+          <li>Microsoft Office</li>
+          <li>Fundamentals of Digital Marketing, Google</li>
+          <li>Business Case Development, Harvard Business Impact</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact">
+    <div class="wrap">
+      <p class="label">Contact</p>
+      <h2>Let's work together</h2>
+      <p class="lead">I am open to digital marketing roles and internships. Reach out by email or phone, or connect on LinkedIn.</p>
+      <ul class="contact-list">
+        <li>
+          <span class="c-label">Email</span>
+          <span class="c-value" id="emailText">asthagoyal1112@gmail.com</span>
+          <button class="copy" type="button" data-copy="asthagoyal1112@gmail.com">Copy</button>
+        </li>
+        <li>
+          <span class="c-label">Phone</span>
+          <span class="c-value" id="phoneText">+91 9334515442</span>
+          <button class="copy" type="button" data-copy="+91 9334515442">Copy</button>
+        </li>
+        <li>
+          <span class="c-label">LinkedIn</span>
+          <a class="c-value" href="https://www.linkedin.com/in/astha-goyal" target="_blank" rel="noopener">linkedin.com/in/astha-goyal</a>
+          <a class="copy" href="https://www.linkedin.com/in/astha-goyal" target="_blank" rel="noopener">Open</a>
+        </li>
+        <li>
+          <span class="c-label">Location</span>
+          <span class="c-value">Greater Noida, India</span>
+          <span class="copy-spacer" aria-hidden="true"></span>
+        </li>
+      </ul>
+      <p class="status" id="copyStatus" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <p>© <span id="year">2026</span> Astha Goyal</p>
+    <a href="#top">Back to top</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* Theme toggle: follows the system until the visitor picks one */
+  var themeBtn = document.getElementById('themeBtn');
+  try {
+    var saved = localStorage.getItem('ag-theme');
+    if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+  } catch (e) {}
+  themeBtn.addEventListener('click', function () {
+    var current = root.getAttribute('data-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('ag-theme', next); } catch (e) {}
+  });
+
+  /* Mobile menu */
+  var nav = document.getElementById('nav');
+  var menuBtn = document.getElementById('menuBtn');
+  function setMenu(open) {
+    nav.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+  }
+  menuBtn.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+
+  /* Highlight the nav link for the section in view */
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && map[en.target.id]) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          map[en.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) spy.observe(el);
+    });
+
+    /* Count-up on the results card. Final values are already in the markup. */
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var counters = document.querySelectorAll('[data-count]');
+    var counter = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        counter.unobserve(en.target);
+        if (reduce) return;
+        var el = en.target;
+        var end = parseInt(el.getAttribute('data-count'), 10);
+        var pre = el.getAttribute('data-prefix') || '';
+        var suf = el.getAttribute('data-suffix') || '';
+        var start = null, dur = 900;
+        function step(t) {
+          if (start === null) start = t;
+          var p = Math.min((t - start) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = pre + Math.round(end * eased) + suf;
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function (c) { counter.observe(c); });
+  }
+
+  /* Copy buttons */
+  var status = document.getElementById('copyStatus');
+  var timer;
+  function say(msg) {
+    status.textContent = msg;
+    clearTimeout(timer);
+    timer = setTimeout(function () { status.textContent = ''; }, 2500);
+  }
+  function selectText(el) {
+    var r = document.createRange();
+    r.selectNodeContents(el);
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
+  }
+  document.querySelectorAll('button.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      var target = btn.parentNode.querySelector('.c-value');
+      var done = function () { say('Copied ' + text); };
+      var fail = function () { if (target) selectText(target); say('Press Ctrl+C or Cmd+C to copy the selected text'); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fail);
+      } else { fail(); }
+    });
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
